@@ -1,12 +1,14 @@
 # First RAG
 
-This project is a simple retrieval-augmented generation (RAG) setup built with:
+This project is a simple retrieval-augmented generation (RAG) pipeline built with Wikipedia data, OpenAI embeddings, LangChain, and ChromaDB.
+
+## What This Project Does
 
 - Wikipedia scraping with `requests` and `BeautifulSoup` (`bs4`)
-- Wikipedia text collection scripts
-- paragraph-based document chunking
-- OpenAI embeddings
-- Chroma vector database
+- saves cleaned article text as `.txt` files inside `docs/`
+- splits documents into paragraph-based chunks
+- creates embeddings with `text-embedding-3-small`
+- stores vectors locally in `chroma_db/`
 
 ## Tools And Packages
 
@@ -22,7 +24,8 @@ This project is a simple retrieval-augmented generation (RAG) setup built with:
 
 - `txt.py`: downloads and cleans Wikipedia articles into `.txt` files
 - `docs/`: stores the generated text documents
-- `ingestion_pipeline.py`: loads `.txt` files, chunks them by paragraph, creates embeddings, and stores them in Chroma
+- `ingestion_pipeline.py`: loads `.txt` files, chunks them by paragraph, creates embeddings, and stores them in ChromaDB
+- `chroma_db/`: local persisted vector database
 
 ## How Data Is Collected
 
@@ -34,7 +37,7 @@ This project is a simple retrieval-augmented generation (RAG) setup built with:
 
 1. Run `txt.py` to scrape and download Wikipedia content into the `docs/` folder.
 2. Run `ingestion_pipeline.py` to:
-   - load all `.txt` documents
+   - load all `.txt` documents from `docs/`
    - split them into paragraph chunks
    - generate embeddings with `text-embedding-3-small`
    - save the vectors in `chroma_db/`
@@ -57,4 +60,5 @@ python ingestion_pipeline.py
 ## Notes
 
 - `CHAT_MODEL = "gpt-5-mini"` is prepared for the next query/generation step of the RAG app.
+- The current ingestion pipeline stores paragraph chunks with metadata such as `filename`, `source`, and `paragraph_index`.
 - If OpenAI quota is unavailable, ingestion will fail during embedding generation.
