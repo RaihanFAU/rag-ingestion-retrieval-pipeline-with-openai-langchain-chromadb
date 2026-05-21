@@ -47,7 +47,7 @@ This project is a simple retrieval-augmented generation (RAG) pipeline built wit
 Create a `.env` file in the project root with your API key:
 
 ```env
-OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY= api_key_here
 ```
 
 ## Run
