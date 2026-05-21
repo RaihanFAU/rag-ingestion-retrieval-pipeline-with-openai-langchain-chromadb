@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -104,6 +105,11 @@ def build_vector_store(documents, persist_directory: Path):
         api_key=api_key,
         model=EMBEDDING_MODEL,
     )
+
+    # Rebuild the vector DB from scratch on each run to avoid duplicate chunks.
+    if persist_directory.exists():
+        shutil.rmtree(persist_directory)
+
     vector_store = Chroma.from_documents(
         documents=documents,
         embedding=embeddings,
